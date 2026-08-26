@@ -1,0 +1,49 @@
+appId: com.roy.duty-happy
+productName: 值班快乐机
+directories:
+  output: release
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asar: true
+electronFuses:
+  enableCookieEncryption: true
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+npmRebuild: false
+extraResources:
+  - from: resources/icon.ico
+    to: icon.ico
+  - from: resources/icon.png
+    to: icon.png
+win:
+  executableName: DutyHappy
+  icon: icon.ico
+  target:
+    - nsis
+    - portable
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: 值班快乐机
+  uninstallDisplayName: 值班快乐机
+  artifactName: DutyHappy-${version}-setup.${ext}
+  installerIcon: icon.ico
+  uninstallerIcon: icon.ico
+  installerHeaderIcon: icon.ico
+portable:
+  artifactName: DutyHappy-${version}-portable.exe
+# Auto-update reads GitHub Releases (NSIS setup.exe only; portable cannot auto-update).
+publish:
+  provider: github
+  owner: houdesu
+  repo: duty-happy
