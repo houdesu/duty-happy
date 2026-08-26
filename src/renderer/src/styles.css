@@ -898,24 +898,35 @@ body.is-resizing-dock * {
 }
 
 .files-toolbar {
-  display: grid;
-  grid-template-columns: 32px 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: 6px;
   padding: 0 10px 8px;
 }
 
 .files-tool {
   height: 30px;
+  padding: 0 8px;
   border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--surface-2);
   font-size: 12px;
   font-weight: 600;
   color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex: 1 1 0;
+  min-width: min-content;
 }
 
 .files-tool.icon-only {
   padding: 0;
+  flex: 0 0 32px;
+  width: 32px;
+  min-width: 32px;
   display: grid;
   place-items: center;
 }

@@ -14,7 +14,9 @@ function currentVersion(): string {
 
 function emit(next: AppUpdateStatus): void {
   status = next
-  getWindow()?.webContents.send('update:status', next)
+  const win = getWindow()
+  if (!win || win.isDestroyed() || win.webContents.isDestroyed()) return
+  win.webContents.send('update:status', next)
 }
 
 function unsupported(message: string): AppUpdateStatus {
@@ -149,5 +151,5 @@ export function scheduleStartupUpdateCheck(): void {
   startupScheduled = true
   setTimeout(() => {
     void check(true)
-  }, 8000)
+  }, 1500)
 }

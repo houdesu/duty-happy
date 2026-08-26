@@ -80,6 +80,13 @@ function createWindow(): void {
   applyWindowChrome(mainWindow, appearance)
   void mainWindow.webContents.setVisualZoomLevelLimits(1, 1)
 
+  mainWindow.on('close', () => {
+    ssh.disconnectAll()
+  })
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+
   mainWindow.on('ready-to-show', () => {
     mainWindow?.show()
     scheduleStartupUpdateCheck()

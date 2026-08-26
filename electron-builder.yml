@@ -47,3 +47,4 @@ publish:
   provider: github
   owner: houdesu
   repo: duty-happy
+  releaseType: release

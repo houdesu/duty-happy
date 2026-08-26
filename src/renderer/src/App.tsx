@@ -111,7 +111,6 @@ export default function App() {
 async function reactToUpdate(status: AppUpdateStatus, seen: Set<string>): Promise<void> {
   const { toast, askConfirm } = useApp.getState()
   if (status.phase === 'available') {
-    if (status.quiet && status.version && readSkippedUpdate() === status.version) return
     const key = `available:${status.version}:${status.quiet}`
     if (seen.has(key)) return
     seen.add(key)
@@ -122,11 +121,7 @@ async function reactToUpdate(status: AppUpdateStatus, seen: Set<string>): Promis
       cancel: '以后再说',
       danger: false
     })
-    if (ok) {
-      void window.duty.update.download()
-      return
-    }
-    if (status.version) writeSkippedUpdate(status.version)
+    if (ok) void window.duty.update.download()
     return
   }
   if (status.phase === 'ready') {
@@ -160,20 +155,4 @@ function friendlyUpdateError(message?: string): string {
     return '还没找到新包。确认发布目录里有 latest.yml 和 setup 安装包'
   }
   return message || '更新没查到'
-}
-
-function readSkippedUpdate(): string {
-  try {
-    return localStorage.getItem('duty-skip-update') || ''
-  } catch {
-    return ''
-  }
-}
-
-function writeSkippedUpdate(version: string): void {
-  try {
-    localStorage.setItem('duty-skip-update', version)
-  } catch {
-    /* ignore */
-  }
 }

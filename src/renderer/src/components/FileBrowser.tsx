@@ -411,7 +411,7 @@ export default function FileBrowser() {
             onClick={() => void downloadEntries(selectedEntries)}
             title={selectedEntries.some((entry) => entry.isDir) ? '下载所选（含文件夹）' : '下载所选'}
           >
-            {downloadLabel}
+            {downloading ? '下载中' : '下载'}
           </button>
         ) : null}
       </div>

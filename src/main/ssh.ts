@@ -198,11 +198,15 @@ export class SshManager {
     if (!conn) return
     this.connections.delete(tabId)
     try {
+      conn.stream?.stderr?.removeAllListeners()
+      conn.stream?.removeAllListeners()
+      conn.client.removeAllListeners()
       conn.stream?.end()
       conn.client.end()
     } catch {
       /* ignore */
     }
+    this.send('ssh:status', { tabId, status: 'closed' })
   }
 
   async list(tabId: string, path: string): Promise<FileEntry[]> {
@@ -421,7 +425,9 @@ export class SshManager {
   }
 
   private send(channel: string, payload: unknown): void {
-    this.getWindow()?.webContents.send(channel, payload)
+    const win = this.getWindow()
+    if (!win || win.isDestroyed() || win.webContents.isDestroyed()) return
+    win.webContents.send(channel, payload)
   }
 }
 
