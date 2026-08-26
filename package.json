@@ -1,6 +1,6 @@
 {
   "name": "duty-happy",
-  "version": "1.7.8",
+  "version": "1.7.9",
   "description": "值班快乐机 — 夜里告警来了也能假装很开心的 SSH 客户端",
   "author": "Roy",
   "private": true,
